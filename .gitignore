@@ -47,5 +47,5 @@ db/*
 
 *.mvn
 mvnw.cmd
-mvnv
+mvnw
 filmorate.iml
