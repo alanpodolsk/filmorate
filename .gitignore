@@ -10,8 +10,7 @@
 hs_err_pid*
 out/
 target/
-*.mvn
-mvnw.cmd
+!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -45,3 +44,8 @@ build/
 
 *.db
 db/*
+
+*.mvn
+mvnw.cmd
+mvnv
+filmorate.iml
