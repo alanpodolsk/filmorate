@@ -42,7 +42,7 @@ public class FilmController {
     }
 
     private void isValid(Film film) {
-        if (film == null){
+        if (film == null) {
             throw new ValidationException("Передан пустой объект фильма");
         } else if (film.getName() == null || film.getName().isBlank()) {
             throw new ValidationException("Наименование не должно быть пустым");
