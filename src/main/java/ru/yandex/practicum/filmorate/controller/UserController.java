@@ -18,33 +18,39 @@ public class UserController {
     private int generatedId = 1;
 
     @PostMapping
-    public User createUser(@RequestBody User user){
+    public User createUser(@RequestBody User user) {
         isValid(user);
         user.setId(generatedId++);
-        users.put(user.getId(),user);
+        if (user.getName() == null) {
+            user.setName(user.getLogin());
+        }
+        users.put(user.getId(), user);
         return user;
     }
 
     @GetMapping
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return new ArrayList<>(users.values());
     }
+
     @PutMapping
-    public User updateUser(@RequestBody User user){
-        isValid(user);
-        if (user.getId() == null){
-            user.setId(generatedId++);
-        }
-        users.put(user.getId(),user);
-        return user;
+    public User updateUser(@RequestBody User user) {
+            isValid(user);
+            if (user.getId() == null || users.get(user.getId()) == null) {
+                throw new RuntimeException("Данный пользователь отсутствует в базе");
+            }
+            users.put(user.getId(), user);
+            return user;
     }
 
-    private void isValid(User user){
-        if (user.getLogin() == null || user.getLogin().isBlank()){
+    private void isValid(User user) {
+        if (user == null) {
+            throw new ValidationException("Передан пустой объект пользователя");
+        } else if (user.getLogin() == null || user.getLogin().isBlank()) {
             throw new ValidationException("Логин не должен быть пустым");
-        } else if (user.getBirthday().isAfter(LocalDate.now())){
+        } else if (user.getBirthday().isAfter(LocalDate.now())) {
             throw new ValidationException("Дата рождения не должна быть позднее сегодня");
-        } else if (user.getEmail().contains("@") == false){
+        } else if (user.getEmail().contains("@") == false) {
             throw new ValidationException("Некорректно указан email");
         }
     }
