@@ -45,7 +45,7 @@ build/
 *.db
 db/*
 
-*.mvn
+.mvn
 mvnw.cmd
 mvnw
 filmorate.iml
